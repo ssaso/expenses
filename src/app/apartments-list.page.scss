@@ -1,0 +1,157 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  .page-title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  .page-subtitle {
+    margin: 0.25rem 0 0;
+    opacity: 0.8;
+  }
+}
+
+.empty-state {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.apartments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 3fr));
+  gap: 1.25rem;
+}
+
+.apartment-card {
+  &__avatar {
+    background: rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  &__chips {
+    margin-bottom: 0.75rem;
+  }
+}
+
+.bill-form {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1.2fr) auto;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  &__field {
+    width: 100%;
+
+    &--month {
+      min-width: 0;
+    }
+  }
+}
+
+.bill-list {
+  margin-top: 0.5rem;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__title {
+    font-weight: 500;
+  }
+
+  &__meta {
+    display: flex;
+    gap: 0.75rem;
+    opacity: 0.8;
+    font-size: 0.9rem;
+  }
+
+  &__amount {
+    font-weight: 500;
+  }
+
+  &__empty {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+}
+
+
+
+.bill-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.bill-info {
+  display: flex;
+  flex-direction: row;
+  gap: 9px;
+  width: -webkit-fill-available;
+  justify-content: space-between;
+}
+
+.bill-list__meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.bill-list__amount {
+  font-weight: 500;
+}
+
+.bill-list__item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.bill-list__item:last-child {
+  border-bottom: none;
+}
+
+.apartment-card__header {
+  display: flex;
+  gap: 6px;
+}
+
+.apartment-card__titles {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.apartment-card__avatar {
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0px;
+}
+
+.bill-edit-form {
+  padding-top: 12px;
+}

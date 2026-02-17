@@ -1,0 +1,36 @@
+<section class="dashboard">
+
+  <div class="kpi-grid">
+    <mat-card class="kpi-card">
+      <h3>Месечно</h3>
+      <p>{{ totalMonthly() | number:'1.0-0' }} MKD</p>
+      <p>{{ totalMonthly() /61.5 | number:'1.0-0' }} EUR</p>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <h3>Годишно</h3>
+      <p>{{ totalYearly() | number:'1.0-0' }} MKD</p>
+      <p>{{ totalYearly() /61.5 | number:'1.0-0' }} EUR</p>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <p>{{ apartments().length }} Ставки</p>
+      <p>{{ x() }} засебни трошоци</p>
+    </mat-card>
+  </div>
+
+  <div class="charts-grid">
+
+    <mat-card class="chart-card">
+      <h3>Monthly Breakdown</h3>
+      <canvas #breakdownChart></canvas>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <h3>Expense Ratio</h3>
+      <canvas #ratioChart></canvas>
+    </mat-card>
+
+  </div>
+
+</section>

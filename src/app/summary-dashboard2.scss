@@ -1,0 +1,59 @@
+.dashboard {
+  padding: 40px;
+  min-height: calc(100vh - 64px);
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 50px;
+}
+
+.kpi-card {
+  padding: 30px;
+  border-radius: 24px;
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.kpi-card h3 {
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.kpi-card p {
+  font-size: 32px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+}
+
+.chart-card {
+  padding: 30px;
+  border-radius: 24px;
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+canvas {
+  max-height: 400px;
+}

@@ -1,0 +1,129 @@
+<section class="dashboard">
+  <!-- Header -->
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p class="date">{{ today | date:'fullDate' }}</p>
+  </div> 
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <mat-card class="kpi-card">
+      <mat-icon class="kpi-icon">payments</mat-icon>
+      <div class="kpi-content">
+        <span class="kpi-label">Monthly total</span>
+        <span class="kpi-value">{{ totalMonthly() | number }} MKD</span>
+      </div>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <mat-icon class="kpi-icon">calendar_today</mat-icon>
+      <div class="kpi-content">
+        <span class="kpi-label">Yearly total</span>
+        <span class="kpi-value">{{ totalYearly() | number }} MKD</span>
+      </div>
+    </mat-card>
+
+    <mat-card class="kpi-card"> 
+      <mat-icon class="kpi-icon">home</mat-icon> 
+      <div class="kpi-content">
+        <span class="kpi-label">Apartments</span>
+        <span class="kpi-value">{{ totalApartments() }}</span>
+      </div>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <mat-icon class="kpi-icon">receipt</mat-icon>
+      <div class="kpi-content">
+        <span class="kpi-label">Expenses</span>
+        <span class="kpi-value">{{ totalExpensesCount() }}</span>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Insights Cards (like Upwork's Hiring Activity) -->
+  <div class="insights-grid">
+    <mat-card class="insights-card">
+      <h3>Apartments</h3>
+      <div class="stat-row">
+        <span>Total</span>
+        <strong>{{ totalApartments() }}</strong>
+      </div>
+      <div class="stat-row">
+        <span>With expenses</span>
+        <strong>{{ apartmentsWithExpenses() }}</strong>
+      </div>
+      <div class="stat-row">
+        <span>Empty</span>
+        <strong>{{ emptyApartments() }}</strong>
+      </div>
+    </mat-card>
+
+    <mat-card class="insights-card">
+      <h3>Expenses</h3>
+      <div class="stat-row">
+        <span>Total</span>
+        <strong>{{ totalExpensesCount() }}</strong>
+      </div>
+      <div class="stat-row">
+        <span>Monthly</span>
+        <strong>{{ monthlyExpensesCount() }}</strong>
+      </div>
+      <div class="stat-row">
+        <span>Yearly</span>
+        <strong>{{ yearlyExpensesCount() }}</strong>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Average Costs (table style like bid amounts) -->
+  <mat-card class="averages-card">
+    <h3>Average costs</h3>
+    <div class="table-row">
+      <span>All apartments (monthly)</span>
+      <span class="value">{{ avgMonthlyPerApartment() | number:'1.0-0' }} MKD</span>
+    </div>
+    <div class="table-row">
+      <span>All apartments (yearly)</span>
+      <span class="value">{{ avgYearlyPerApartment() | number:'1.0-0' }} MKD</span>
+    </div>
+    <div class="table-row">
+      <span>Most expensive (monthly)</span>
+      <span class="value">{{ mostExpensiveApartmentMonthly() | number:'1.0-0' }} MKD</span>
+      <span class="small">({{ mostExpensiveApartmentName() }})</span>
+    </div>
+    <div class="table-row">
+      <span>Least expensive (monthly)</span>
+      <span class="value">{{ leastExpensiveApartmentMonthly() | number:'1.0-0' }} MKD</span>
+      <span class="small">({{ leastExpensiveApartmentName() }})</span>
+    </div>
+  </mat-card>
+
+  <!-- About Section -->
+  <mat-card class="about-card">
+    <h3>Summary</h3>
+    <div class="about-item">
+      <mat-icon>verified</mat-icon> Payment method verified
+    </div>
+    <div class="about-item">
+      <mat-icon>phone</mat-icon> Phone number verified
+    </div>
+    <div class="about-item">
+      <mat-icon>location_on</mat-icon> Apartments: {{ totalApartments() }}
+    </div>
+    <div class="about-item">
+      <mat-icon>history</mat-icon> Last updated: {{ lastUpdated() | date:'short' }}
+    </div>
+  </mat-card>
+
+  <!-- Charts -->
+  <div class="charts-grid">
+    <mat-card class="chart-card">
+      <h3>Monthly Breakdown</h3>
+      <canvas #breakdownChart></canvas>
+    </mat-card>
+    <mat-card class="chart-card">
+      <h3>Expense Ratio</h3>
+      <canvas #ratioChart></canvas>
+    </mat-card>
+  </div>
+</section>

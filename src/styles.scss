@@ -1,1 +1,111 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+	--defaultNoOfCols: 4;
+	--gridMinSize: 280px;
+	--gridRepeatValue: auto-fit;
+
+	// Text sizes
+	--fontSizeXtraSmall: 0.75rem;
+	--fontSizeSmall: 0.875rem;
+	--fontSizeDefault: 1rem;
+	--fontSizeLarge: 3.125rem;
+	// Background colors
+	--backgroundColorDefault: #fff;
+	// Box shadows
+	--boxShadowDefault: 0 0 4px 0 rgba(0, 0, 0, 0.16);
+	--boxShadowHover: 0 0 8px 0 rgba(0, 0, 0, 0.24);
+	--boxShadowCustom: 0 4px 17px rgba(0, 0, 0, 0.35);
+	// Fonts
+	--fontFamilyBase: 'Segoe UI';
+	// Transition
+	--baseTransition: all 0.3s ease;
+}
+
+
+
+body {
+	background: var(--backgroundColorDefault);
+	font-family: var(--fontFamilyBase) !important;
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body [class^='mat-'],
+body [class*=' mat-'] {
+	font-family: var(--fontFamilyBase) !important;
+}
+
+body .material-icons {
+	font-family: 'Material Icons' !important;
+}
+
+/* -----------------------------
+   1. Box sizing reset
+-------------------------------- */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* -----------------------------
+   2. Remove browser defaults
+-------------------------------- */
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+/* -----------------------------
+   3. Better typography base
+-------------------------------- */
+body {
+	// font-family: Roboto, "Helvetica Neue", sans-serif;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+/* -----------------------------
+   4. Remove default margins
+-------------------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0;
+}
+
+/* -----------------------------
+   5. Images & media safe sizing
+-------------------------------- */
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+/* -----------------------------
+   6. Buttons inherit font
+-------------------------------- */
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+/* -----------------------------
+   7. Prevent layout overflow
+-------------------------------- */
+body {
+	overflow-x: hidden;
+}

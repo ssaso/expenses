@@ -1,0 +1,220 @@
+<section class="page-header">
+  <div>
+    <h1 class="page-title">Сметки, трошоци...</h1>
+    <!-- <p class="page-subtitle">
+          Overview of all places and their fixed monthly costs.
+        </p> -->
+  </div>
+
+  <button mat-flat-button color="primary" (click)="goToCreate()" style="margin-top: 10px;">
+    <mat-icon>add_home</mat-icon>
+    <span>Додај трошок</span>
+  </button>
+</section>
+@if(apartments().length === 0){
+<section class="empty-state">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>No apartments yet</mat-card-title>
+      <mat-card-subtitle>
+        Start by adding your first apartment to track bills.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-flat-button color="primary" (click)="goToCreate()">
+        <mat-icon>add</mat-icon>
+        <span>Додај трошок</span>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</section>
+}
+
+@if(apartments().length > 0){
+<section class="apartments-grid">
+  @for ( apartment of apartments(); track apartment.id){
+  <mat-card class="apartment-card">
+    <mat-card-header class="apartment-card__header">
+
+      <div mat-card-avatar class="apartment-card__avatar" [style.background]="generateColor(apartment.name)">
+        {{ apartment.name.charAt(0) | uppercase }}
+      </div>
+
+      <div class="apartment-card__titles">
+        <mat-card-title>{{ apartment.name }}</mat-card-title>
+
+        @if (apartment.notes) {
+        <mat-card-subtitle>
+          {{ apartment.notes }}
+        </mat-card-subtitle>
+        }
+      </div>
+
+      <button mat-icon-button color="warn" aria-label="Remove apartment" matTooltip="Remove this apartment"
+        (click)="removeApartment(apartment)">
+        <mat-icon style="color:#b01414">delete</mat-icon>
+      </button>
+
+    </mat-card-header>
+
+
+    <mat-card-content>
+      <div class="apartment-card__chips">
+        <mat-chip-set>
+          @let count = apartment.expenses.length;
+
+          <mat-chip appearance="outlined" color="primary">
+            <mat-icon matChipAvatar>payments</mat-icon>
+            {{ count }} {{ count === 1 ? 'сметка' : 'сметки' }}
+          </mat-chip>
+
+          <mat-chip appearance="outlined">
+            <!-- <mat-icon matChipAvatar>euro</mat-icon> -->
+            {{ apartmentMonthlyTotal(apartment) | number : '1.0-0' }} MKD месечно
+          </mat-chip>
+          <mat-chip style="background-color: #3f51b59e;">
+            <!-- <mat-icon matChipAvatar>euro</mat-icon> -->
+            {{ apartmentYearlyTotal(apartment) | number : '1.0-0' }} MKD годишно
+          </mat-chip>
+        </mat-chip-set>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      @if (apartment.expenses.length > 0) {
+      <mat-list class="bill-list">
+        @for (bill of apartment.expenses; track bill.id) {
+        <mat-list-item class="bill-list__item">
+          <!-- <div class="bill-row">
+            <div class="bill-info">
+              <div class="bill-list__title">
+                {{ bill.label }}:
+              </div>
+
+              <div class="bill-list__meta">
+                @if (bill.month) {
+                <span>{{ bill.month }}</span>
+                }
+
+                <span class="bill-list__amount">
+                  {{ bill.amount | number:'1.0-0' }}
+                </span>
+                <span class="bill-type" [class.yearly]="bill.type === 'yearly'">
+                  {{ bill.type === 'monthly' ? 'месечно' : 'годишно' }}
+                </span>
+
+              </div>
+            </div>
+
+            <button mat-icon-button color="warn" aria-label="Remove bill" (click)="removeBill(apartment, bill)">
+              <mat-icon style="color:#b01414">delete</mat-icon>
+            </button>
+          </div> -->
+          @if (editingExpenseId !== bill.id) {
+
+          <div class="bill-row">
+            <div class="bill-info">
+              <div class="bill-list__title">
+                {{ bill.label }}
+              </div>
+
+              <div class="bill-list__meta">
+                <span>{{ bill.amount | number:'1.0-0' }} MKD</span>
+                <span class="bill-type">
+                  {{ bill.type === 'yearly' ? 'Годишно' : 'Месечно' }}
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <button mat-icon-button (click)="startEdit(apartment, bill)">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <button mat-icon-button color="warn" (click)="removeBill(apartment, bill)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          } @else {
+
+          <div class="bill-edit-form">
+
+            <mat-form-field>
+              <input matInput [(ngModel)]="getApartmentBillDraft(apartment.id).label">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="number" [(ngModel)]="getApartmentBillDraft(apartment.id).amount">
+            </mat-form-field>
+
+            <mat-slide-toggle [(ngModel)]="getApartmentBillDraft(apartment.id).isYearly"
+              [ngModelOptions]="{ standalone: true }">
+              {{
+              getApartmentBillDraft(apartment.id).isYearly
+              ? 'Годишно'
+              : 'Месечно'
+              }}
+            </mat-slide-toggle>
+
+            <button mat-button color="primary" (click)="saveEdit(apartment, bill)">
+              Save
+            </button>
+
+            <button mat-button (click)="cancelEdit(apartment)">
+              Cancel
+            </button>
+
+          </div>
+          }
+
+        </mat-list-item>
+        }
+      </mat-list>
+      }
+
+      @if(apartment.expenses.length === 0){
+      <p class="bill-list__empty">
+        No bills yet for this apartment. Add your first one above.
+      </p>
+      }
+
+      @if(editingExpenseId === null ){
+
+      <form class="bill-form" (ngSubmit)="addBill(apartment)" #billForm="ngForm">
+        <mat-form-field appearance="outline" class="bill-form__field">
+          <mat-label>Сметка</mat-label>
+          <input matInput name="label-{{ apartment.id }}" [(ngModel)]="getApartmentBillDraft(apartment.id).label"
+            placeholder="e.g. Вода, Струја" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="bill-form__field">
+          <mat-label>Сума</mat-label>
+          <input matInput type="number" min="0" step="0.01" name="amount-{{ apartment.id }}"
+            [(ngModel)]="getApartmentBillDraft(apartment.id).amount" required />
+        </mat-form-field>
+
+        <mat-slide-toggle [(ngModel)]="getApartmentBillDraft(apartment.id).isYearly"
+          [ngModelOptions]="{ standalone: true }">
+          {{
+          getApartmentBillDraft(apartment.id).isYearly
+          ? 'Годишно'
+          : 'Месечно'
+          }}
+        </mat-slide-toggle>
+
+
+        <button mat-stroked-button color="primary" type="submit" [disabled]="!billForm.form.valid">
+          <mat-icon>receipt_long</mat-icon>
+          <span>Add</span>
+        </button>
+
+
+      </form>
+      }
+    </mat-card-content>
+  </mat-card>
+  }
+</section>
+}
