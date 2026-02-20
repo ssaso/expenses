@@ -260,14 +260,49 @@ export class SummaryDashboardComponent implements AfterViewInit, OnDestroy {
 
   topExpenses = computed(() => {
     const allExpenses = this.apartments().flatMap((a) =>
-      a.expenses.map((e) => ({
-        name: e.label || `${a.name} - ${e.type}`,
-        amount: e.amount,
-        type: e.type,
-        apartment: a.name,
-      })),
+      a.expenses.map((e) => {
+        // Convert yearly expenses to monthly equivalent for fair comparison
+        const monthlyEquivalent = e.type === 'yearly' ? e.amount / 12 : e.amount;
+        return {
+          name: e.label || `${a.name} - ${e.type}`,
+          amount: e.amount,
+          monthlyEquivalent: monthlyEquivalent,
+          type: e.type,
+          apartment: a.name,
+        };
+      }),
     );
-    return allExpenses.sort((a, b) => b.amount - a.amount).slice(0, 10);
+    
+    // Sort by monthly equivalent to get the real top expenses
+    return allExpenses.sort((a, b) => b.monthlyEquivalent - a.monthlyEquivalent).slice(0, 10);
+  });
+
+  // New computed property for yearly-only top expenses
+  topYearlyExpenses = computed(() => {
+    return this.topExpenses()
+      .filter(e => e.type === 'yearly')
+      .sort((a, b) => b.monthlyEquivalent - a.monthlyEquivalent)
+      .slice(0, 10);
+  });
+
+  // New computed property for monthly-only top expenses
+  topMonthlyExpenses = computed(() => {
+    return this.topExpenses()
+      .filter(e => e.type === 'monthly')
+      .sort((a, b) => b.monthlyEquivalent - a.monthlyEquivalent)
+      .slice(0, 10);
+  });
+
+  // New computed property for yearly vs 12*monthly comparison
+  topExpensesComparison = computed(() => {
+    return this.topExpenses()
+      .map(expense => ({
+        ...expense,
+        yearlyVs12Monthly: expense.type === 'yearly' ? expense.amount : expense.amount * 12,
+        comparisonType: expense.type === 'yearly' ? 'yearly' : '12xmonthly'
+      }))
+      .sort((a, b) => b.yearlyVs12Monthly - a.yearlyVs12Monthly)
+      .slice(0, 10);
   });
 
   expenseCategories = computed(() => {

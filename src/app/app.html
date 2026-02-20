@@ -30,12 +30,12 @@
   <span class="app-toolbar__spacer"></span>
 
   <span class="app-toolbar__total" *ngIf="totalMonthly() as total">
-    Total / month:
+    Вкупно месечно:
     <strong>{{ total | number : '1.0-0' }} MKD</strong>
   </span>
   &nbsp; &nbsp; &nbsp; &nbsp;
   <span class="app-toolbar__total" *ngIf="totalMonthly() as total">
-    Total / year:
+    Вкупно годишно:
     <strong>{{ total * 12 | number : '1.0-0' }} MKD</strong>
   </span>
 </mat-toolbar>
