@@ -1,36 +1,93 @@
 <section class="dashboard">
-
   <div class="kpi-grid">
     <mat-card class="kpi-card">
-      <h3>Месечно</h3>
+      <h3>Monthly Total</h3>
       <p>{{ totalMonthly() | number:'1.0-0' }} MKD</p>
-      <p>{{ totalMonthly() /61.5 | number:'1.0-0' }} EUR</p>
+      <span>{{ totalMonthlyEUR() | number:'1.0-0' }} EUR</span>
     </mat-card>
 
     <mat-card class="kpi-card">
-      <h3>Годишно</h3>
+      <h3>Yearly Total</h3>
       <p>{{ totalYearly() | number:'1.0-0' }} MKD</p>
-      <p>{{ totalYearly() /61.5 | number:'1.0-0' }} EUR</p>
+      <span>{{ totalYearlyEUR() | number:'1.0-0' }} EUR</span>
     </mat-card>
 
     <mat-card class="kpi-card">
-      <p>{{ apartments().length }} Ставки</p>
-      <p>{{ x() }} засебни трошоци</p>
+      <h3>Apartments</h3>
+      <p>{{ totalApartments() }}</p>
+      <span>{{ totalExpenses() }} total expenses</span>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <h3>Expense Mix</h3>
+      <p>{{ monthlyAmountShare() | number:'1.0-1' }}% monthly</p>
+      <span>{{ yearlyAmountShare() | number:'1.0-1' }}% yearly / 12</span>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <h3>Average / Apartment</h3>
+      <p>{{ avgMonthlyPerApartment() | number:'1.0-0' }} MKD</p>
+      <span>{{ eur(avgMonthlyPerApartment()) | number:'1.0-0' }} EUR</span>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <h3>Average / Expense</h3>
+      <p>{{ avgMonthlyPerExpense() | number:'1.0-0' }} MKD</p>
+      <span>{{ monthlyExpenseCount() }} monthly / {{ yearlyExpenseCount() }} yearly</span>
     </mat-card>
   </div>
 
-  <div class="charts-grid">
+  <div class="insights-grid">
+    <mat-card class="insight-card">
+      <h3>Most Expensive Apartment</h3>
+      <p>{{ mostExpensiveApartment()?.name || '-' }}</p>
+      <span>{{ mostExpensiveApartment()?.total || 0 | number:'1.0-0' }} MKD / month</span>
+    </mat-card>
 
+    <mat-card class="insight-card">
+      <h3>Least Expensive Apartment</h3>
+      <p>{{ leastExpensiveApartment()?.name || '-' }}</p>
+      <span>{{ leastExpensiveApartment()?.total || 0 | number:'1.0-0' }} MKD / month</span>
+    </mat-card>
+
+    <mat-card class="insight-card">
+      <h3>Largest Single Expense</h3>
+      <p>{{ largestExpense()?.label || '-' }}</p>
+      <span>
+        {{ largestExpense()?.monthlyEquivalent || 0 | number:'1.0-0' }} MKD / month
+        ({{ largestExpense()?.apartmentName || '-' }})
+      </span>
+    </mat-card>
+  </div>
+
+  <div class="charts-grid two-col">
     <mat-card class="chart-card">
-      <h3>Monthly Breakdown</h3>
+      <h3>Monthly Total by Apartment</h3>
       <canvas #breakdownChart></canvas>
     </mat-card>
 
     <mat-card class="chart-card">
-      <h3>Expense Ratio</h3>
+      <h3>Monthly vs Yearly Ratio</h3>
       <canvas #ratioChart></canvas>
     </mat-card>
-
   </div>
 
+  <div class="charts-grid two-col">
+    <mat-card class="chart-card">
+      <h3>Composition per Apartment</h3>
+      <canvas #compositionChart></canvas>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <h3>Top Expense Categories</h3>
+      <canvas #topExpensesChart></canvas>
+    </mat-card>
+  </div>
+
+  <div class="charts-grid one-col">
+    <mat-card class="chart-card">
+      <h3>Expense Count by Apartment</h3>
+      <canvas #countChart></canvas>
+    </mat-card>
+  </div>
 </section>

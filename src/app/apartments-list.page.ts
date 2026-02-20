@@ -55,6 +55,10 @@ export class ApartmentsListPage {
     }
   >();
 
+  // 🔹 NEW: state for apartment editing
+  protected editingApartmentId: number | null = null;
+  private apartmentEditDrafts = new Map<number, { name: string; notes: string }>();
+
   protected goToCreate(): void {
     this.router.navigate(['/apartments', 'new']);
   }
@@ -67,8 +71,41 @@ export class ApartmentsListPage {
         isYearly: false,
       });
     }
-
     return this.draftBills.get(apartmentId)!;
+  }
+
+  // 🔹 NEW: methods for apartment editing
+  protected startEditApartment(apartment: Apartment): void {
+    this.editingApartmentId = apartment.id;
+    this.apartmentEditDrafts.set(apartment.id, {
+      name: apartment.name,
+      notes: apartment.notes || '',
+    });
+  }
+
+  protected cancelEditApartment(apartmentId: number): void {
+    this.editingApartmentId = null;
+    this.apartmentEditDrafts.delete(apartmentId);
+  }
+
+  protected saveEditApartment(apartment: Apartment): void {
+    const draft = this.apartmentEditDrafts.get(apartment.id);
+    if (!draft || !draft.name.trim()) return; // name is required
+
+    this.store.updateApartment(apartment.id, {
+      name: draft.name.trim(),
+      notes: draft.notes.trim() || undefined,
+    });
+
+    this.cancelEditApartment(apartment.id);
+  }
+
+  protected getApartmentEditDraft(apartmentId: number): { name: string; notes: string } {
+    if (!this.apartmentEditDrafts.has(apartmentId)) {
+      // fallback (should not happen if used correctly)
+      this.apartmentEditDrafts.set(apartmentId, { name: '', notes: '' });
+    }
+    return this.apartmentEditDrafts.get(apartmentId)!;
   }
 
   protected generateColor(name: string): string {
@@ -147,5 +184,4 @@ export class ApartmentsListPage {
     this.editingExpenseId = null;
     this.draftBills.delete(apartment.id);
   }
-  
 }

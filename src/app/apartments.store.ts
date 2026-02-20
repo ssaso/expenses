@@ -66,31 +66,17 @@ export class ApartmentsStore {
     return [
       {
         id: this.nextApartmentId++,
-        name: 'Скопје стан',
+        name: 'Стан 1',
         expenses: [
           createExpense('Данок', 2894, 'yearly'),
           createExpense('Водовод', 209),
           createExpense('ЕВН', 420),
-          // createExpense('Комуналец', 500),
           createExpense('Чистење', 650),
         ],
       },
       {
         id: this.nextApartmentId++,
-        name: 'Охрид стан',
-        expenses: [
-          createExpense('Данок', 3500, 'yearly'),
-          createExpense('Водовод', 400),
-          createExpense('ЕВН', 2500),
-          createExpense('Колекторски систем', 193),
-          createExpense('Комуналец', 391),
-          createExpense('Нискоградба', 180),
-          createExpense('Станбен управител', 450),
-        ],
-      },
-      {
-        id: this.nextApartmentId++,
-        name: 'Св. Стефан стан',
+        name: 'Стан 2',
         expenses: [
           createExpense('Данок', 3347, 'yearly'),
           createExpense('Водовод', 150),
@@ -104,7 +90,12 @@ export class ApartmentsStore {
       {
         id: this.nextApartmentId++,
         name: 'Друго',
-        expenses: [createExpense('Дрва', 4 * 3500, 'yearly')],
+        expenses: [
+          createExpense('Огрев', 4 * 3500, 'yearly'),
+          createExpense('Disney+', 618),
+          createExpense('Телеком', 2800),
+          createExpense('Спорт', 2000),
+        ],
       },
       {
         id: this.nextApartmentId++,
@@ -112,12 +103,68 @@ export class ApartmentsStore {
         expenses: [
           createExpense('Регистрација, Технички итн.', 9000, 'yearly'),
           createExpense('Гуми', 0, 'yearly'),
+          createExpense('Каско', 15000, 'yearly'),
           createExpense('Годишен сервис', 31000, 'yearly'),
           createExpense('Зелен Картон', 3500, 'yearly'),
           createExpense('Бензин', 1000),
         ],
       },
     ];
+
+    // return [
+    //   {
+    //     id: this.nextApartmentId++,
+    //     name: 'Скопје стан',
+    //     expenses: [
+    //       createExpense('Данок', 2894, 'yearly'),
+    //       createExpense('Водовод', 209),
+    //       createExpense('ЕВН', 420),
+    //       createExpense('Чистење', 650),
+    //     ],
+    //   },
+    //   {
+    //     id: this.nextApartmentId++,
+    //     name: 'Охрид стан',
+    //     expenses: [
+    //       createExpense('Данок', 3500, 'yearly'),
+    //       createExpense('Водовод', 400),
+    //       createExpense('ЕВН', 2500),
+    //       createExpense('Колекторски систем', 193),
+    //       createExpense('Комуналец', 391),
+    //       createExpense('Нискоградба', 180),
+    //       createExpense('Станбен управител', 450),
+    //     ],
+    //   },
+    //   {
+    //     id: this.nextApartmentId++,
+    //     name: 'Св. Стефан стан',
+    //     expenses: [
+    //       createExpense('Данок', 3347, 'yearly'),
+    //       createExpense('Водовод', 150),
+    //       createExpense('ЕВН', 470),
+    //       createExpense('Колекторски систем', 63),
+    //       createExpense('Комуналец', 282),
+    //       createExpense('Нискоградба', 82),
+    //       createExpense('Домко', 732),
+    //     ],
+    //   },
+    //   {
+    //     id: this.nextApartmentId++,
+    //     name: 'Друго',
+    //     expenses: [createExpense('Дрва', 4 * 3500, 'yearly'), createExpense('Disney+', 618)],
+    //   },
+    //   {
+    //     id: this.nextApartmentId++,
+    //     name: 'Кола',
+    //     expenses: [
+    //       createExpense('Регистрација, Технички итн.', 9000, 'yearly'),
+    //       createExpense('Гуми', 0, 'yearly'),
+    //       createExpense('Годишен сервис', 31000, 'yearly'),
+    //       createExpense('Зелен Картон', 3500, 'yearly'),
+    //       createExpense('Бензин', 1000),
+    //     ],
+    //   },
+    // ];
   }
 
   addApartment(name: string, notes?: string): void {
@@ -130,6 +177,12 @@ export class ApartmentsStore {
       ...current,
       { id, name: trimmedName, notes, expenses: [] },
     ]);
+  }
+
+  updateApartment(apartmentId: number, updates: { name?: string; notes?: string }): void {
+    this.apartmentsSignal.update((current) =>
+      current.map((apt) => (apt.id === apartmentId ? { ...apt, ...updates } : apt)),
+    );
   }
 
   removeApartment(apartmentId: number): void {

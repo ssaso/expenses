@@ -43,22 +43,44 @@
   }
 }
 
+
+
 .bill-form {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1.2fr) auto;
+  grid-template-columns: minmax(160px, 2fr) minmax(90px, 1fr) auto auto;
   gap: 0.75rem;
+  align-items: center;
   margin-top: 1rem;
-  margin-bottom: 0.5rem;
-
-  @media (max-width: 900px) {
-    grid-template-columns: minmax(0, 1fr);
-  }
 
   &__field {
     width: 100%;
 
-    &--month {
-      min-width: 0;
+    // Ensure inputs don't overflow their grid cell
+    .mat-mdc-form-field-infix {
+      width: auto;
+    }
+  }
+
+  // Make the amount field a bit narrower (optional)
+  .bill-form__field--amount {
+    max-width: 120px;
+  }
+
+  mat-slide-toggle {
+    white-space: nowrap;
+    // margin-right: 0.5rem; // space before button
+  }
+
+  button[mat-stroked-button] {
+    white-space: nowrap;
+    min-width: 90px; // consistent button width
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+
+    mat-slide-toggle {
+      margin-right: 0;
     }
   }
 }
@@ -95,40 +117,32 @@
 }
 
 
+// .bill-info {
+//   display: flex;
+//   flex-direction: row;
+//   gap: 9px;
+//   width: -webkit-fill-available;
+//   justify-content: space-between;
+// }
 
-.bill-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
+// .bill-list__meta {
+//   display: flex;
+//   gap: 12px;
+//   align-items: center;
+// }
 
-.bill-info {
-  display: flex;
-  flex-direction: row;
-  gap: 9px;
-  width: -webkit-fill-available;
-  justify-content: space-between;
-}
+// .bill-list__amount {
+//   font-weight: 500;
+// }
 
-.bill-list__meta {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
+// .bill-list__item {
+//   padding: 12px 0;
+//   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+// }
 
-.bill-list__amount {
-  font-weight: 500;
-}
-
-.bill-list__item {
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.bill-list__item:last-child {
-  border-bottom: none;
-}
+// .bill-list__item:last-child {
+//   border-bottom: none;
+// }
 
 .apartment-card__header {
   display: flex;
@@ -154,4 +168,138 @@
 
 .bill-edit-form {
   padding-top: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+// ... (keep all existing styles) ...
+
+.apartment-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.5rem 0;
+
+  .full-width {
+    width: 100%;
+  }
+
+  .edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+}
+
+
+// Bill row grid – first column wider, others compact
+.bill-row {
+  // display: flex;
+  justify-content: space-between;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(160px, 2fr) minmax(90px, auto) minmax(80px, auto) minmax(90px, auto) auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .bill-list__title {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bill-amount {
+    text-align: right;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .bill-type {
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .bill-converted {
+    opacity: 0.3;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .bill-actions {
+    display: flex;
+    gap: 0.25rem;
+    justify-content: flex-end;
+  }
+
+
+
+  .bill-type {
+    text-align: left;
+    white-space: nowrap;
+
+
+  }
+
+}
+
+.type-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: currentColor; // or a specific color like #3f51b5 for yearly
+}
+
+// Yearly items – use primary color for type and amount (optional)
+.bill-row.yearly {
+
+  .bill-list__title,
+  .bill-amount,
+  .bill-type {
+    color: #3f51b5; // indigo primary
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 900px) {
+  .bill-row {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+
+    .bill-list__title {
+      font-weight: 600;
+    }
+
+    .bill-amount,
+    .bill-type,
+    .bill-converted {
+      grid-column: 1;
+      text-align: left;
+    }
+
+    .bill-actions {
+      grid-column: 1;
+      justify-content: flex-start;
+    }
+  }
+}
+
+.bill-converted {
+  text-align: right;
+  white-space: nowrap;
+
+  .type-icon {
+    margin-left: 4px;   /* slight spacing from the number */
+    vertical-align: middle;
+  }
 }
