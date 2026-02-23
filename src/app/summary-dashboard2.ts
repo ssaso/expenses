@@ -398,7 +398,10 @@ export class SummaryDashboard2Component implements AfterViewInit, OnDestroy {
     this.breakdownChart.data.datasets[0].data = breakdown.map((apartment) => apartment.total);
     this.breakdownChart.update('none');
 
-    this.ratioChart.data.datasets[0].data = [amountRatio.monthly, amountRatio.yearlyMonthlyEquivalent];
+    this.ratioChart.data.datasets[0].data = [
+      amountRatio.monthly,
+      amountRatio.yearlyMonthlyEquivalent,
+    ];
     this.ratioChart.update('none');
 
     this.compositionChart.data.labels = breakdown.map((apartment) => apartment.name);
@@ -409,7 +412,9 @@ export class SummaryDashboard2Component implements AfterViewInit, OnDestroy {
     this.compositionChart.update('none');
 
     this.topExpensesChart.data.labels = topExpenses.map((expense) => expense.label);
-    this.topExpensesChart.data.datasets[0].data = topExpenses.map((expense) => expense.monthlyEquivalent);
+    this.topExpensesChart.data.datasets[0].data = topExpenses.map(
+      (expense) => expense.monthlyEquivalent,
+    );
     this.topExpensesChart.update('none');
 
     this.countChart.data.labels = counts.map((item) => item.name);

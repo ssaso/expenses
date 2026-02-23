@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="app-toolbar">
-  <button mat-icon-button class="app-toolbar__logo" routerLink="/apartments" aria-label="Go to apartments overview">
+  <button mat-icon-button class="app-toolbar__logo" routerLink="/overview" aria-label="Go to overview">
     <mat-icon>home</mat-icon>
   </button>
 
@@ -12,16 +12,16 @@
       <mat-icon>dashboard</mat-icon>
       <span>Dashboard</span>
     </a>
-    <a mat-button routerLink="/apartments" routerLinkActive="app-toolbar__link--active"
+    <a mat-button routerLink="/overview" routerLinkActive="app-toolbar__link--active"
       [routerLinkActiveOptions]="{ exact: true }">
       <mat-icon>view_list</mat-icon>
       <span>Трошоци</span>
     </a>
-    <a mat-button routerLink="/apartments/new" routerLinkActive="app-toolbar__link--active">
+    <a mat-button routerLink="/overview/new" routerLinkActive="app-toolbar__link--active">
       <mat-icon>add_home</mat-icon>
       <span>Додај ставка</span>
     </a>
-    <a mat-button routerLink="/dashboard2" routerLinkActive="app-toolbar__link--active">
+    <a mat-button routerLink="/dashboard-dark" routerLinkActive="app-toolbar__link--active">
       <mat-icon>dashboard_2</mat-icon>
       <span>Dashboard (dark)</span>
     </a>

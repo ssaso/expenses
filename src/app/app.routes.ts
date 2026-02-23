@@ -8,26 +8,26 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'apartments',
+    redirectTo: 'overview',
   },
   {
     path: 'dashboard',
     component: SummaryDashboardComponent,
   },
   {
-    path: 'dashboard2',
+    path: 'dashboard-dark',
     component: SummaryDashboard2Component,
   },
   {
-    path: 'apartments',
+    path: 'overview',
     component: ApartmentsListPage,
   },
   {
-    path: 'apartments/new',
+    path: 'overview/new',
     component: ApartmentCreatePage,
   },
   {
     path: '**',
-    redirectTo: 'apartments',
+    redirectTo: 'overview',
   },
 ];
